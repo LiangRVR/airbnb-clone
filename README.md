@@ -1,3 +1,6 @@
+# airbnb-clone
+Airbnb clone using Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
