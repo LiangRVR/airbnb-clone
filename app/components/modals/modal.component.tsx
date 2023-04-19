@@ -168,7 +168,7 @@ const Modal: React.FC<ModalProps> = ({
                   flex-auto
                   "
               >
-                body
+                {body}
               </div>
 
               {/* footer */}

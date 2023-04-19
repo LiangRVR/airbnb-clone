@@ -4,10 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../avatar/avatar.component";
 import MenuItem from "./menu-item.component";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const registerModal = useRegisterModal();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,6 +28,17 @@ const UserMenu = () => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
+
+  const onClickHandler = (selectMenuOnClick: "signIn" | "signUp") => {
+    const menuOnClick: { [x: string]: () => void } = {
+      signIn: () => console.log("sing In"),
+      signUp: registerModal.onOpen,
+    };
+    return () => {
+      setIsOpen(false);
+      menuOnClick[selectMenuOnClick]();
+    };
+  };
 
   return (
     <div className="relative" ref={ref}>
@@ -50,13 +63,8 @@ const UserMenu = () => {
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
           <div className=" flex flex-col cursor-pointer">
             <>
-              <MenuItem
-                onClick={() => {
-                  console.log("Login");
-                }}
-                label="Login"
-              />
-              <MenuItem onClick={() => {}} label="Sign Up" />
+              <MenuItem onClick={onClickHandler("signIn")} label="Login" />
+              <MenuItem onClick={onClickHandler("signUp")} label="Sign Up" />
             </>
           </div>
         </div>
