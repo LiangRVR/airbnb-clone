@@ -12,6 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Modal from "./modal.component";
 import Heading from "../heading/heading.component";
+import Input from "../inputs/input.component";
 
 type Props = {};
 
@@ -55,6 +56,14 @@ const RegisterModal = (props: Props) => {
       <Heading
         title="Welcome to Airbnb"
         subtitle="Create an account"
+      />
+      <Input
+        type="email"
+        id="email"
+        label="Email"
+        register={register}
+        errors={errors}
+        required
       />
     </div>
   );
