@@ -13,13 +13,14 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Modal from "./modal.component";
 import Heading from "../heading/heading.component";
 import Input from "../inputs/input.component";
+import { toast } from "react-hot-toast";
+import Button from "../button/button.component";
 
 type Props = {};
 
 const RegisterModal = (props: Props) => {
   const registerModal = useRegisterModal();
-  const [isLoading, setIsLoading] =
-    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -33,9 +34,7 @@ const RegisterModal = (props: Props) => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     axios
@@ -44,7 +43,7 @@ const RegisterModal = (props: Props) => {
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(`Something when wrong error:${error}`);
       })
       .finally(() => {
         setIsLoading(false);
@@ -61,10 +60,75 @@ const RegisterModal = (props: Props) => {
         type="email"
         id="email"
         label="Email"
+        disabled={isLoading}
         register={register}
         errors={errors}
         required
       />
+      <Input
+        type="text"
+        id="name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        type="password"
+        id="password"
+        label="Password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+    </div>
+  );
+
+  const footerContent = (
+    <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        icon={FcGoogle}
+        onClick={() => {}}
+      />
+      <Button
+        outline
+        label="Continue with Github"
+        icon={AiFillGithub}
+        onClick={() => {}}
+      />
+      <div
+        className="
+              text-neutral-500
+              text-center
+              mt-4
+              font-light"
+      >
+        <div
+          className="
+                  flex
+                  flex-row
+                  justify-center
+                  text-center
+                  items-center
+                  gap-2"
+        >
+          <div>Already have an account?</div>
+          <div
+            onClick={registerModal.onClose}
+            className="
+                  text-neutral-800
+                  cursor-pointer
+                  hover:underline"
+          >
+            Log in
+          </div>
+        </div>
+      </div>
     </div>
   );
 
@@ -77,6 +141,7 @@ const RegisterModal = (props: Props) => {
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
+      footer={footerContent}
     />
   );
 };

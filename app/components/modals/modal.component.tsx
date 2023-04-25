@@ -86,8 +86,7 @@ const Modal: React.FC<ModalProps> = ({
             relative
             w-full
             md:w-4/6
-            lg:w-3/6
-            xl:w-2/5
+            max-w-[568px]
             my-6
             mx-auto
             h-full
@@ -102,7 +101,11 @@ const Modal: React.FC<ModalProps> = ({
               transition
               duration-300
               h-full
-              ${showModal ? "translate-y-0" : "translate-y-full"}
+              ${
+                showModal
+                  ? "translate-y-0"
+                  : "translate-y-full"
+              }
               ${showModal ? "opacity-100" : "opacity-0"}`}
           >
             <div
@@ -190,20 +193,22 @@ const Modal: React.FC<ModalProps> = ({
                     w-full
                     "
                 >
-                  {secondaryAction && secondaryActionLabel && (
-                    <Button
-                      outline
-                      onClick={handleSecondaryAction}
-                      label={secondaryActionLabel}
-                      disabled={disabled}
-                    />
-                  )}
+                  {secondaryAction &&
+                    secondaryActionLabel && (
+                      <Button
+                        outline
+                        onClick={handleSecondaryAction}
+                        label={secondaryActionLabel}
+                        disabled={disabled}
+                      />
+                    )}
                   <Button
                     onClick={handleSubmit}
                     label={actionLabel}
                     disabled={disabled}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>
