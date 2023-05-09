@@ -14,8 +14,10 @@ import Heading from "../heading/heading.component";
 import Input from "../inputs/input.component";
 import Button from "../button/button.component";
 
-import useRegisterModal from "@/app/hooks/useRegisterModal";
-import useLoginModal from "@/app/hooks/useLoginModal";
+import {
+  useLoginModal,
+  useRegisterModal,
+} from "@/app/hooks/useModal";
 
 import { signIn } from "next-auth/react";
 

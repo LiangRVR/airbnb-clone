@@ -7,19 +7,23 @@ import {
   useState,
 } from "react";
 import { signOut } from "next-auth/react";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
-import useLoginModal from "@/app/hooks/useLoginModal";
+import {
+  useLoginModal,
+  useRegisterModal,
+} from "@/app/hooks/useModal";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../avatar/avatar.component";
 import MenuItem from "./menu-item.component";
 import { safeUser } from "@/app/types";
 
-
-
-
 interface UserMenuProps {
   currentUser?: safeUser | null;
+}
+
+enum MenuOption {
+  Login = "login",
+  SignUp = "signUp",
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -57,24 +61,28 @@ const UserMenu: React.FC<UserMenuProps> = ({
     setIsOpen((value) => !value);
   }, []);
 
-  const onClickHandler = (
-    selectMenuOnClick: "login" | "signUp"
-  ) => {
-    const menuOnClick: { [x: string]: () => void } = {
-      login: loginModal.onOpen,
-      signUp: registerModal.onOpen,
+  const onClickHandler = (menuOption: MenuOption) => {
+    const menuOptionHandlers = {
+      [MenuOption.Login]: loginModal.onOpen,
+      [MenuOption.SignUp]: registerModal.onOpen,
     };
     return () => {
       setIsOpen(false);
-      menuOnClick[selectMenuOnClick]();
+      menuOptionHandlers[menuOption]();
     };
   };
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      loginModal.onOpen();
+    }
+  }, [currentUser, loginModal]);
 
   return (
     <div className="relative" ref={ref}>
       <div className="flex flex-row items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="hidden md:block text-sm font-semibold py-4 px-4  rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
           Airbnb your home
@@ -85,7 +93,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image}/>
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -123,11 +131,13 @@ const UserMenu: React.FC<UserMenuProps> = ({
             ) : (
               <>
                 <MenuItem
-                  onClick={onClickHandler("login")}
+                  onClick={onClickHandler(MenuOption.Login)}
                   label="Login"
                 />
                 <MenuItem
-                  onClick={onClickHandler("signUp")}
+                  onClick={onClickHandler(
+                    MenuOption.SignUp
+                  )}
                   label="Sign Up"
                 />
               </>

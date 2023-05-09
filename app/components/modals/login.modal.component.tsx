@@ -10,13 +10,15 @@ import {
 } from "react-hook-form";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import useLoginModal from "@/app/hooks/useLoginModal";
+import {
+  useLoginModal,
+  useRegisterModal,
+} from "@/app/hooks/useModal";
 import Modal from "./modal.component";
 import Heading from "../heading/heading.component";
 import Input from "../inputs/input.component";
 import { toast } from "react-hot-toast";
 import Button from "../button/button.component";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const LoginModal = () => {
   const router = useRouter();
