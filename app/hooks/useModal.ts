@@ -15,4 +15,4 @@ const createHookModal = () =>
 
 export const useLoginModal = createHookModal();
 export const useRegisterModal = createHookModal();
-
+export const useRentModal = createHookModal()

@@ -10,6 +10,7 @@ import { signOut } from "next-auth/react";
 import {
   useLoginModal,
   useRegisterModal,
+  useRentModal,
 } from "@/app/hooks/useModal";
 
 import { AiOutlineMenu } from "react-icons/ai";
@@ -33,6 +34,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -74,9 +76,11 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   const onRent = useCallback(() => {
     if (!currentUser) {
-      loginModal.onOpen();
+      return loginModal.onOpen();
     }
-  }, [currentUser, loginModal]);
+
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
 
   return (
     <div className="relative" ref={ref}>
@@ -119,7 +123,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   label="My properties"
                 />
                 <MenuItem
-                  onClick={() => {}}
+                  onClick={rentModal.onOpen}
                   label="Airbnb my home"
                 />
                 <hr />
